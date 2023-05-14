@@ -1,12 +1,11 @@
 from flask import *
 import flask
 import time
-import users_class
+import users_class as users_class
 
 app = Flask(__name__)
 
-admin_user = "admin"
-admin_pwd = "admin"
+admin = users_class.User("admin", "admin", "administrator")
 
 dict_user_pwds = {
 
@@ -21,7 +20,7 @@ def authenticate():
     if request.method == "POST":
         input_user = request.form.get("username")
         input_pwd = request.form.get("password")
-        if (input_user == admin_user) and (input_pwd == admin_pwd):
+        if (admin.authenticateCredentials(input_user, input_pwd) == True):
             return redirect('main')
         else:
             return abort(401)
@@ -34,6 +33,14 @@ def main():
 
 @app.route('/manual', methods=['GET', 'POST'])
 def manual():
+    return None
+
+@app.route('/ai', methods=['GET', 'POST'])
+def ai():
+    return None
+
+@app.route('/endpage', methods = ['GET', 'POST'])
+def endpage():
     return None
 
 app.run()
