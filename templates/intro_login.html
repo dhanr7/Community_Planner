@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/intro_login.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tiro+Tamil&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class = "intro_log">
+        <img class = "logo" src="{{url_for('static', filename='images/avhs_logo.jpg')}}"/>
+        <h1>Welcome to the AVHS Event Planner!</h1>
+        <a href="authenticate"><button class="login">Click here to login!</button></a> 
+    </div>
+</body>
+</html>

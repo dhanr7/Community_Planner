@@ -1,0 +1,21 @@
+* {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    margin: 2 auto;
+    align-items: center;
+    min-height: 100%;
+}
+body {
+    font-family: 'Tiro Tamil', serif;
+    background: linear-gradient(purple, gold);
+    background-repeat: no-repeat;
+    font-size: 1.5em;
+}
+.auth {
+    width: 1.5em;
+}
+.username, .password {
+    font-size: 1.5em;
+}

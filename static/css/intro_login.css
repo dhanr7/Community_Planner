@@ -1,0 +1,26 @@
+* {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    margin: 2 auto;
+    align-items: center;
+    font-family: 'Tiro Tamil', serif;
+}
+.logo {
+    border: 3px solid #001;
+    object-fit: cover;
+    border-radius: 75%;
+    width: 4.5em;
+}
+.login {
+    font-size: 0.5em;
+}
+html {
+    min-height: 100%;
+}
+body {
+    font-size: 1.5em;
+    background: linear-gradient(purple, gold);
+    background-repeat: no-repeat;
+}
