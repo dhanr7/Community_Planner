@@ -10,8 +10,13 @@
 		<h1>Amador Valley Community Planner</h1>
 		<p>Welcome to the Amador Valley Highschool Community Planner, where you can schedule events manually or use AI to suggest the best time. Our AI system takes into account various factors such as availability to find the best time for your events.</p>
 		<p>To get started, please select your preferred scheduling method:</p>
-		<button>Manual Scheduling</button>
-		<button>AI Suggestion</button>
+		<form method = "post" id = "button">
+			<button type="submit" name = "redirect" value = "manual">Manual Scheduling</button>
+		</form>
+		<form method = "post" id = "button">
+			<button type="submit" name = "redirect" value = "ai">AI Suggestion</button>
+		</form>
+		
 	</div>
 </body>
 </html>

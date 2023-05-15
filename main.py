@@ -29,11 +29,18 @@ def authenticate():
 
 @app.route('/main', methods = ['GET', 'POST'])
 def main():
+    if request.method == "POST":
+        if (request.form['redirect'] == 'manual'):
+            return redirect('manual')
+        elif (request.form['redirect'] == 'ai'):
+            return redirect('ai')
+        else:
+            pass
     return render_template("main_page.html")
 
 @app.route('/manual', methods=['GET', 'POST'])
 def manual():
-    return None
+    return render_template("manual.html")
 
 @app.route('/ai', methods=['GET', 'POST'])
 def ai():
