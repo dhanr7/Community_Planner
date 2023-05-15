@@ -7,6 +7,24 @@
         <title>Schedule Event Using AI</title>
     </head>
     <body>
-        
+        <!--Description, Preference of Date, # of Participants & Who is Participating, -->
+        <div class = "container">
+            <form method="post">
+                <label for = "description">Description of Event:</label>
+                <input type="text" id="description" name="description" required/>
+
+                <label for = "timing_preference">Preference of Timing: </label>
+                <input type="text" id="timing_preference" name="timing_preference"/> <!--Can be optional-->
+
+                <label for = "season/time_year_pref">Preference of Season or Time of Year to be Scheduled: </label>
+                <input type="text" id="season/time_year_pref" name="season/time_year_pref"/> <!--Can be optional-->
+
+                <label for = "num_participants">Number of Participants to Attend: </label>
+                <input type="text" id ="num_participants" name="num_participants" required/>
+
+                <label for = "name_participants">Name of Participants to Attend: </label>
+                <input type="text" id ="name_participants" name="name_participants" required/>
+            </form>
+        </div>
     </body>
 </html>
