@@ -23,7 +23,7 @@ def authenticate():
         if (admin.authenticateCredentials(input_user, input_pwd) == True):
             return redirect('main')
         else:
-            return abort(401)
+            return abort(418)
             
     return render_template("authenticate.html")
 
@@ -44,10 +44,10 @@ def manual():
 
 @app.route('/ai', methods=['GET', 'POST'])
 def ai():
-    return None
+    return render_template("ai.html")
 
 @app.route('/endpage', methods = ['GET', 'POST'])
 def endpage():
-    return None
+    return render_template('finish.html')
 
 app.run()
