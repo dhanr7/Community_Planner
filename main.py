@@ -7,6 +7,9 @@ app = Flask(__name__)
 
 admin = users_class.User("admin", "admin", "administrator")
 
+array_manual_constraints = []
+array_ai_constraints = []
+
 dict_user_pwds = {
 
 }
@@ -23,7 +26,7 @@ def authenticate():
         if (admin.authenticateCredentials(input_user, input_pwd) == True):
             return redirect('main')
         else:
-            return abort(418)
+            return abort(418) #abort(401) code
             
     return render_template("authenticate.html")
 
@@ -40,14 +43,29 @@ def main():
 
 @app.route('/manual', methods=['GET', 'POST'])
 def manual():
+    if request.method == "POST":
+        if (request.form['redirect'] == 'schedule_button'):
+            array_manual_constraints.extend([("Event name: " + str(request.form.get('event-name'))), ("Event date: " + str(request.form.get('event-date'))), ("Event start time: " + str(request.form.get("event-start-time"))), ("Event end time: " + str(request.form.get("event-end-time"))), ("Event Description: " + str(request.form.get("event-description"))), ("Number of Participants: " + str(request.form.get("event-participants"))), ("Participants attending: " + str(request.form.get("participant-names")))])
+            return redirect('manual_confirm')
     return render_template("manual.html")
 
 @app.route('/ai', methods=['GET', 'POST'])
 def ai():
     return render_template("ai.html")
 
-@app.route('/endpage', methods = ['GET', 'POST'])
-def endpage():
-    return render_template('finish.html')
+@app.route('/manual_confirm', methods=['GET', 'POST'])
+def manual_confirmation():
+    if request.method == "POST":
+        if (request.form['option'] == 'proceed_button'):
+                return redirect(url_for('main'))
+        elif (request.form['option'] == 'change_params'):
+                return redirect(url_for('manual'))
+        else:
+            pass
+    return render_template('manual_confirmation.html', array_manual_constraints=array_manual_constraints)
+
+@app.route('/ai_confirm', methods=['GET', 'POST'])
+def ai_confirmation():
+    return render_template("ai_confirmation.html")
 
 app.run()

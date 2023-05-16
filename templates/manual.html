@@ -9,30 +9,30 @@
 <body>
     <div class="container">
         <h1>Schedule Event Manually</h1>
-        <form>
-            <label for="event-name">Event Name:</label>
-            <input type="text" id="event-name" name="event-name" required>
+            <form method="post" id="input_params">
+                <label for="event-name">Event Name:</label>
+                <input type="text" id="event-name" name="event-name" required>
 
-            <label for="event-date">Event Date:</label>
-            <input type="date" id="event-date" name="event-date" required>
+                <label for="event-date">Event Date:</label>
+                <input type="date" id="event-date" name="event-date" required>
 
-            <label for="event-start-time">Event Start Time:</label>
-            <input type="time" id="event-start-time" name="event-start-time" required>
+                <label for="event-start-time">Event Start Time:</label>
+                <input type="time" id="event-start-time" name="event-start-time" required>
 
-            <label for="event-end-time">Event End Time:</label>
-            <input type="time" id="event-end-time" name="event-end-time" required>
+                <label for="event-end-time">Event End Time:</label>
+                <input type="time" id="event-end-time" name="event-end-time" required>
 
-            <label for="event-description">Event Description:</label>
-            <textarea id="event-description" name="event-description" rows="7" required></textarea>
+                <label for="event-description">Event Description:</label>
+                <textarea id="event-description" name="event-description" rows="7" required></textarea>
 
-            <label for="event-participants">Number of Participants:</label>
-            <input type="text" id="event-participants" name="event-participants" required>
+                <label for="event-participants">Number of Participants:</label>
+                <input type="text" id="event-participants" name="event-participants" required>
 
-            <label for="participant-names">Participant Names:</label>
-            <input type="text" id="participant-names" name="participant-names" required>
-
-            <button type="submit">Schedule Event</button>
-        </form>
+                <label for="participant-names">Participant Names:</label>
+                <input type="text" id="participant-names" name="participant-names" required>
+                
+                <button type="submit" name="redirect" value="schedule_button">Schedule Event</button>
+            </form>
     </div>
 </body>
 </html>

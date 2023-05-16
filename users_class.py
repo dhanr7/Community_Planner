@@ -39,8 +39,6 @@ class User:
     @classmethod
     #authentication
     def authenticateCredentials(cls, user, pW):
-        print(user, pW)
-        print(User.username, User.password)
         if (User.username == user) and (User.password == pW):
             return True
         return False
