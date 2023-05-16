@@ -7,15 +7,17 @@
         <title>Manual Event Scheduling Confirmation</title>
     </head>
     <body>
-        <h1>You are scheduling an event with the following attributes: </h1>
-        {% for x in array_manual_constraints %}
-            <p>{{ x }}</p>
-        {% endfor %}
-        <form method="post" id="data_button">
-            <button type="submit" id="option" value="proceed_button">Proceed and return to main page.</button>
-        </form>
-        <form method="post" id="data_button">
-            <button type="submit" id="option" value="change_params">Return to previous page and change/update parameters.</button>
-        </form>
+        <div class="container">
+            <h1>You are scheduling an event with the following attributes: </h1>
+            {% for x in array_manual_constraints %}
+                <p>{{ x }}</p>
+            {% endfor %}
+            <form method="post" id="data_button">
+                <button type="submit" name="option" value="proceed_button">Proceed and return to main page.</button>
+            </form>
+            <form method="post" id="data_button">
+                <button type="submit" name="option" value="change_params">Return to previous page and change/update parameters.</button>
+            </form>
+        </div>
     </body>
 </html>
