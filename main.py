@@ -54,12 +54,12 @@ def ai():
     return render_template("ai.html")
 
 @app.route('/manual_confirm', methods=['GET', 'POST'])
-def manual_confirmation():
+def manual_confirmation(): #not working, solving in progress
     if request.method == "POST":
         if (request.form['option'] == 'proceed_button'):
-                return redirect(url_for('main'))
+            return redirect(url_for('main'))
         elif (request.form['option'] == 'change_params'):
-                return redirect(url_for('manual'))
+            return redirect(url_for('manual'))
         else:
             pass
     return render_template('manual_confirmation.html', array_manual_constraints=array_manual_constraints)
