@@ -54,7 +54,7 @@ def ai():
     return render_template("ai.html")
 
 @app.route('/manual_confirm', methods=['GET', 'POST'])
-def manual_confirmation(): #not working, solving in progress
+def manual_confirmation(): 
     if request.method == "POST":
         if (request.form['option'] == 'proceed_button'):
             return redirect(url_for('main'))
@@ -66,6 +66,13 @@ def manual_confirmation(): #not working, solving in progress
 
 @app.route('/ai_confirm', methods=['GET', 'POST'])
 def ai_confirmation():
+    if request.method == "POST":
+        if (request.form['option'] == 'proceed_button'):
+            return redirect(url_for('main'))
+        elif (request.form['option'] == 'change_params'):
+            return redirect(url_for('ai'))
+        else:
+            pass
     return render_template("ai_confirmation.html")
 
 app.run()
