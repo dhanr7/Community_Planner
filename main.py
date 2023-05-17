@@ -15,9 +15,7 @@ eventObject.blockAllHolidayDates()
 array_manual_constraints = []
 array_ai_constraints = []
 
-dict_user_pwds = {
-
-}
+list_authentication_objects = [] #add all the objects and then later iterate through them to see if any user/pwd the user inputs matches any of these, if so authenticate and proceed.
 
 @app.route('/')
 def index():
