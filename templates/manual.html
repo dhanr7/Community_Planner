@@ -10,6 +10,14 @@
     <div class="container">
         <h1>Schedule Event Manually</h1>
             <form method="post" id="input_params">
+                <div class = "scheduleEventFor">
+                    <label for="eventTypeLabel">Schedule Event As: </label>
+                    <input type="checkbox" id = "eventTypeLabel" name="eventTypeLabel" value="Holiday">Holiday
+                    <input type="checkbox" id = "eventTypeLabel" name="eventTypeLabel" value="School Event">School Event
+                    <input type="checkbox" id = "eventTypeLabel" name="eventTypeLabel" value="Custom">Custom
+                    <input type="text" id="customLabelText" name="customLabelText">
+                </div>
+
                 <label for="event-name">Event Name:</label>
                 <input type="text" id="event-name" name="event-name" required>
 

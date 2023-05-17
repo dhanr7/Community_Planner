@@ -105,12 +105,16 @@ class ScheduleManager:
     
     @classmethod  #unblock a date passed in (i.e remove it from the event_dates.txt file which stores all the dates that are "scheduled")
     def unblockDate(cls, dateToUnblock):
-        with open("Community_Planner/event_dates.txt", "a") as a:
-            
+        with open("Community_Planner/event_dates.txt", "r+") as a:
+            x = a.readlines()
+            a.seek(0)
+            for i in x:
+                if i.find(dateToUnblock) == -1:
+                    a.write(i)
+            a.truncate()
+    
 
 
-                
 
 
-
-
+    

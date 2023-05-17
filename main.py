@@ -50,7 +50,12 @@ def main():
 def manual():
     if request.method == "POST":
         if (request.form['redirect'] == 'schedule_button'):
-            array_manual_constraints.extend([("Event name: " + str(request.form.get('event-name'))), ("Event date: " + str(request.form.get('event-date'))), ("Event start time: " + str(request.form.get("event-start-time"))), ("Event end time: " + str(request.form.get("event-end-time"))), ("Event Description: " + str(request.form.get("event-description"))), ("Number of Participants: " + str(request.form.get("event-participants"))), ("Participants attending: " + str(request.form.get("participant-names")))])
+            if str(request.form.get("eventTypeLabel") != "Custom"):
+                array_manual_constraints.extend([("Event type: " + str(request.form.get("eventTypeLabel"))), ("Event name: " + str(request.form.get('event-name'))), ("Event date: " + str(request.form.get('event-date'))), ("Event start time: " + str(request.form.get("event-start-time"))), ("Event end time: " + str(request.form.get("event-end-time"))), ("Event Description: " + str(request.form.get("event-description"))), ("Number of Participants: " + str(request.form.get("event-participants"))), ("Participants attending: " + str(request.form.get("participant-names")))])
+            elif str(request.form.get("eventTypeLabel") == "Custom"):
+                array_manual_constraints.extend([("Event type: " + str(request.form.get("customLabelText"))), ("Event name: " + str(request.form.get('event-name'))), ("Event date: " + str(request.form.get('event-date'))), ("Event start time: " + str(request.form.get("event-start-time"))), ("Event end time: " + str(request.form.get("event-end-time"))), ("Event Description: " + str(request.form.get("event-description"))), ("Number of Participants: " + str(request.form.get("event-participants"))), ("Participants attending: " + str(request.form.get("participant-names")))])
+            else:
+                pass
             return redirect('manual_confirm')
     return render_template("manual.html")
 
