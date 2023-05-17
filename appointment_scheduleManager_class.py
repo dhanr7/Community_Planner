@@ -75,5 +75,42 @@ class ScheduleManager:
                 pass
         f.close()
 
+    @classmethod #verifies if a date passed into the function as a parameter is already "scheduled" (i.e exists in the event_dates.txt file)
+    def checkIfDateBlocked(cls, proposedDate, dateType):
+        with open("Community_Planner/event_dates.txt", "r") as a:
+            if os.path.getsize('Community_Planner/event_dates.txt') != 0:
+                eventContent = a.readlines()
+                for x in eventContent:
+                    if x.find(proposedDate) != -1:
+                        return True
+                return False
+        a.close()
+    
+    @classmethod #gets the line number in the event_dates.txt of a specific date passed in (for data analysis purposes)
+    def getIndexOfDate(cls, proposedDate, dateType):
+        with open("Community_Planner/event_dates.txt", "r") as a:
+            if os.path.getsize('Community_Planner/event_dates.txt') != 0:
+                eventContent = a.readlines()
+                for x in eventContent:
+                    if (x.find(proposedDate) != -1):
+                        return eventContent.index(x)
+                return -1
+        a.close()
+    
+    @classmethod #blocks(schedules) a date with the date and type passed in (type meaning a classifier denoting holiday, school event, etc.)
+    def blockDate(cls, dateToBlock, dateType):
+        with open("Community_Planner/event_dates.txt", "a") as a:
+            a.write("\n" + "{}".format(datetime.date(datetime.strptime(dateToBlock, '%m/%d/%Y'))) + f", {dateType}")
+        a.close()
+    
+    @classmethod  #unblock a date passed in (i.e remove it from the event_dates.txt file which stores all the dates that are "scheduled")
+    def unblockDate(cls, dateToUnblock):
+        with open("Community_Planner/event_dates.txt", "a") as a:
+            
+
+
+                
+
+
 
 
