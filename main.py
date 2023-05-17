@@ -49,7 +49,8 @@ def main():
 @app.route('/manual', methods=['GET', 'POST'])
 def manual():
     if request.method == "POST":
-        if (request.form['redirect'] == 'schedule_button'):
+        if (request.form['redirect'] == 'schedule_button'): #need to make customLabelText accurately get data & need to implement scheduleEvent class to add this date & time as blocked.
+            #need to update scheduleEvents class to also handle timings as well for user scheduled "events" as well as storing name, description, etc.
             if str(request.form.get("eventTypeLabel") != "Custom"):
                 array_manual_constraints.extend([("Event type: " + str(request.form.get("eventTypeLabel"))), ("Event name: " + str(request.form.get('event-name'))), ("Event date: " + str(request.form.get('event-date'))), ("Event start time: " + str(request.form.get("event-start-time"))), ("Event end time: " + str(request.form.get("event-end-time"))), ("Event Description: " + str(request.form.get("event-description"))), ("Number of Participants: " + str(request.form.get("event-participants"))), ("Participants attending: " + str(request.form.get("participant-names")))])
             elif str(request.form.get("eventTypeLabel") == "Custom"):
