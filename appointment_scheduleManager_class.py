@@ -5,11 +5,40 @@
 import datetime
 from datetime import datetime
 import os
+import json
 
 class ScheduleManager:
-    list_holiday_dates_23_24 = [
-        "07/04/2023", #American Independence Day
-        "08/08/2023", #Mandatory Staff Development Day
+    list_holiday_dates_23_24 = {
+        {
+         "Event Type": "Holiday", 
+         "Event Name": "American Independence Day", 
+         "Event Date" : "07/04/2023", 
+         "Event Start Time": "00:00", 
+         "Event End Time": "24:00", 
+         "Event Description": "Federal Holiday - American Independence Day", 
+         "Number of Participants":  "0", 
+         "Participant Names": "No Participants"
+        },
+        {
+         "Event Type": "Holiday", 
+         "Event Name": "Mandatory Staff Development Day", 
+         "Event Date" : "08/08/2023", 
+         "Event Start Time": "00:00", 
+         "Event End Time": "24:00", 
+         "Event Description": "School Holiday - Mandatory Staff Development Day", 
+         "Number of Participants":  "0", 
+         "Participant Names": "No Participants"
+        },
+        {
+         "Event Type": "Holiday", 
+         "Event Name": "Mandatory Staff Development Day", 
+         "Event Date" : "08/08/2023", 
+         "Event Start Time": "00:00", 
+         "Event End Time": "24:00", 
+         "Event Description": "School Holiday - Mandatory Staff Development Day", 
+         "Number of Participants":  "0", 
+         "Participant Names": "No Participants"
+        },
         "09/04/2023", #Labor Day
         "11/01/2023", #Mandatory Staff Development Day
         "11/10/2023", #Veteran's Day
@@ -55,7 +84,7 @@ class ScheduleManager:
         "05/30/2024", #HS Sem 2 Finals
         "05/31/2024", #HS Sem 2 Finals / End of Instructional Year
         "06/03/2024", #Mandatory Staff Development Day
-    ]
+    }
 
     instructionalYearStart = "08/10/2023"
     instructionalYearEnd = "05/31/2024"
@@ -117,4 +146,3 @@ class ScheduleManager:
 
 
 
-    
