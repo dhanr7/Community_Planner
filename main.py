@@ -2,10 +2,15 @@ from flask import *
 import flask
 import time
 import users_class as users_class
+import datetime
+import appointment_scheduleManager_class as appClass
 
 app = Flask(__name__)
 
 admin = users_class.User("admin", "admin", "administrator")
+
+eventObject = appClass.ScheduleManager()
+eventObject.blockAllHolidayDates()
 
 array_manual_constraints = []
 array_ai_constraints = []
