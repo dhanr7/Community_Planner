@@ -9,8 +9,8 @@
     <body>
         <div class="container">
             <h1>You are scheduling an event with the following attributes: </h1>
-            {% for x in array_manual_constraints %}
-                <p>{{ x }}</p>
+            {% for k, x in array_manual_constraints.items() %}
+                <p>{{ k, x}}</p>
             {% endfor %}
             <form method="post" id="data_button">
                 <button type="submit" name="option" value="proceed_button">Proceed and return to main page.</button>

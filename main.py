@@ -12,8 +12,8 @@ admin = users_class.User("admin", "admin", "administrator")
 eventObject = appClass.ScheduleManager()
 eventObject.blockAllHolidayDates()
 
-array_manual_constraints = []
-array_ai_constraints = []
+array_manual_constraints = {}
+array_ai_constraints = {}
 
 list_authentication_objects = [] #add all the objects and then later iterate through them to see if any user/pwd the user inputs matches any of these, if so authenticate and proceed.
 
@@ -46,17 +46,47 @@ def main():
 
 @app.route('/manual', methods=['GET', 'POST'])
 def manual():
+    array_manual_constraints.clear()
     if request.method == "POST":
-        if (request.form['redirect'] == 'schedule_button'): #need to make customLabelText accurately get data & need to implement scheduleEvent class to add this date & time as blocked.
-            #need to update scheduleEvents class to also handle timings as well for user scheduled "events" as well as storing name, description, etc.
+        if (request.form['redirect'] == 'schedule_button'):
             if str(request.form.get("eventTypeLabel"))  != "Custom":
-                array_manual_constraints.extend([("Event type: " + str(request.form.get("eventTypeLabel"))), ("Event name: " + str(request.form.get('event-name'))), ("Event date: " + str(request.form.get('event-date'))), ("Event start time: " + str(request.form.get("event-start-time"))), ("Event end time: " + str(request.form.get("event-end-time"))), ("Event Description: " + str(request.form.get("event-description"))), ("Number of Participants: " + str(request.form.get("event-participants"))), ("Participants attending: " + str(request.form.get("participant-names")))])
+                array_manual_constraints.update({"Event Type": str(request.form.get("eventTypeLabel")), 
+                                                "Event Name": str(request.form.get('event-name')), 
+                                                "Event Date": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get('event-date')), '%Y-%m-%d'), "%Y-%m-%d %H:%M:%S"), 
+                                                "Event Start Time": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get("event-start-time")), "%H:%M"), "%H:%M:%S"), 
+                                                "Event End Time": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get("event-end-time")), "%H:%M"), "%H:%M:%S"), 
+                                                "Event Description": str(request.form.get("event-description")), 
+                                                "Number of Participants": str(request.form.get("event-participants")), 
+                                                "Participant Names": str(request.form.get("participant-names"))})
+                print(array_manual_constraints)
+                if (eventObject.checkIfEventBlocked(array_manual_constraints) == True):
+                    return redirect('manual_error')
+
             elif str(request.form.get("eventTypeLabel"))  == "Custom":
-                array_manual_constraints.extend([("Event type: " + str(request.form.get("customLabelText"))), ("Event name: " + str(request.form.get('event-name'))), ("Event date: " + str(request.form.get('event-date'))), ("Event start time: " + str(request.form.get("event-start-time"))), ("Event end time: " + str(request.form.get("event-end-time"))), ("Event Description: " + str(request.form.get("event-description"))), ("Number of Participants: " + str(request.form.get("event-participants"))), ("Participants attending: " + str(request.form.get("participant-names")))])
+               array_manual_constraints.update({"Event Type": str(request.form.get("customLabelText")), 
+                                                "Event Name": str(request.form.get('event-name')), 
+                                                "Event Date": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get('event-date')), '%Y-%m-%d'), "%Y-%m-%d %H:%M:%S"), 
+                                                "Event Start Time": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get("event-start-time")), "%H:%M"), "%H:%M:%S"), 
+                                                "Event End Time": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get("event-end-time")), "%H:%M"), "%H:%M:%S"), 
+                                                "Event Description": str(request.form.get("event-description")), 
+                                                "Number of Participants": str(request.form.get("event-participants")), 
+                                                "Participant Names": str(request.form.get("participant-names"))})
+               print(array_manual_constraints)
+               if (eventObject.checkIfEventBlocked(array_manual_constraints) == True):
+                    return redirect('manual_error')
             else:
                 pass
             return redirect('manual_confirm')
     return render_template("manual.html")
+
+@app.route('/manual_error', methods=['GET', 'POST'])
+def manual_error():
+    if request.method == "POST":
+        if request.form["redirect"] == "update_params":
+            return redirect(url_for('manual'))
+        elif request.form['redirect'] == "main_redirect":
+            return redirect(url_for('main'))
+    return render_template("manual_error.html")
 
 @app.route('/ai', methods=['GET', 'POST'])
 def ai():
@@ -66,8 +96,10 @@ def ai():
 def manual_confirmation(): 
     if request.method == "POST":
         if (request.form['option'] == 'proceed_button'):
+            eventObject.blockDate(array_manual_constraints)
             return redirect(url_for('main'))
         elif (request.form['option'] == 'change_params'):
+            eventObject.unblockDate(array_manual_constraints["Event Date"])
             return redirect(url_for('manual'))
         else:
             pass
