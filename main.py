@@ -15,8 +15,6 @@ eventObject.blockAllHolidayDates()
 array_manual_constraints = {}
 array_ai_constraints = {}
 
-list_authentication_objects = [] #add all the objects and then later iterate through them to see if any user/pwd the user inputs matches any of these, if so authenticate and proceed.
-
 @app.route('/')
 def index():
     return render_template("intro_login.html")
@@ -29,7 +27,7 @@ def authenticate():
         if (admin.authenticateCredentials(input_user, input_pwd) == True):
             return redirect('main')
         else:
-            return abort(418) #abort(401) code
+            return abort(401)
             
     return render_template("authenticate.html")
 
@@ -58,7 +56,7 @@ def manual():
                                                 "Event Description": str(request.form.get("event-description")), 
                                                 "Number of Participants": str(request.form.get("event-participants")), 
                                                 "Participant Names": str(request.form.get("participant-names"))})
-                print(array_manual_constraints)
+                print(array_manual_constraints) #solely for debugging purposes
                 if (eventObject.checkIfEventBlocked(array_manual_constraints) == True):
                     return redirect('manual_error')
 
@@ -71,7 +69,7 @@ def manual():
                                                 "Event Description": str(request.form.get("event-description")), 
                                                 "Number of Participants": str(request.form.get("event-participants")), 
                                                 "Participant Names": str(request.form.get("participant-names"))})
-               print(array_manual_constraints)
+               print(array_manual_constraints) #solely for debugging purposes
                if (eventObject.checkIfEventBlocked(array_manual_constraints) == True):
                     return redirect('manual_error')
             else:
@@ -99,7 +97,7 @@ def manual_confirmation():
             eventObject.blockDate(array_manual_constraints)
             return redirect(url_for('main'))
         elif (request.form['option'] == 'change_params'):
-            eventObject.unblockDate(array_manual_constraints["Event Date"])
+            eventObject.unblockDate(array_manual_constraints["Event Date"]) #update to reflect datetime object for "Event Date"
             return redirect(url_for('manual'))
         else:
             pass

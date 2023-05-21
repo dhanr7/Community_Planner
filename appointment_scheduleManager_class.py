@@ -1,5 +1,4 @@
 #Class to manage events/manage schedules
-#Yet to be tested
 #Stores all dates that have been taken/ scheduled with their metadata (event_dates.txt)
 
 import datetime
@@ -37,8 +36,6 @@ class ScheduleManager:
                 return False
         a.close()
 
-
-#the below needs to include a list to easily block the dates in the JSON
     @classmethod #blocks(schedules) a date with the date and type passed in (type meaning a classifier denoting holiday, school event, etc.)
     def blockDate(cls, event):
         with open("Community_Planner/event_dates.json", "r+") as a:
@@ -53,6 +50,6 @@ class ScheduleManager:
         with open("event_dates.json", "r+") as a:
             data = json.load(a)
             for i, x in enumerate(data):
-                if datetime.date(datetime.strptime(x.get("Event Date"), '%Y-%m-%d %H:%M:%S')) == datetime.date(datetime.strptime(dateToUnblock,  '%Y-%m-%d')):
+                if datetime.date(datetime.strptime(x.get("Event Date"), '%Y-%m-%d %H:%M:%S')) == datetime.date(datetime.strptime(dateToUnblock, '%Y-%m-%d')):
                     a.pop(data[i])
             json.dump(data, a)
