@@ -31,7 +31,7 @@ class ScheduleManager:
             if os.path.getsize('Community_Planner/event_dates.json') != 0:
                 data = json.load(a)
                 for x in data:
-                    if (datetime.strptime(x.get("Event Date"), '%Y-%m-%d %H:%M:%S') == datetime.strptime(eventList["Event Date"],  '%Y-%m-%d %H:%M:%S')) and ((datetime.strptime(eventList["Event Start Time"], '%H:%M:%S') == datetime.strptime(x.get("Event Start Time"), '%H:%M:%S')) or (datetime.strptime(x.get("Event Start Time"), '%H:%M:%S') <= datetime.strptime(eventList["Event Start Time"], '%H:%M:%S') <= datetime.strptime(x.get("Event End Date"), "%H:%M:%S"))):
+                    if (datetime.strptime(x.get("Event Date"), '%Y-%m-%d %H:%M:%S') == datetime.strptime(eventList["Event Date"],  '%Y-%m-%d %H:%M:%S')) and ((datetime.strptime(eventList["Event Start Time"], '%H:%M:%S') == datetime.strptime(x.get("Event Start Time"), '%H:%M:%S')) or (datetime.strptime(x.get("Event Start Time"), '%H:%M:%S') <= datetime.strptime(eventList["Event Start Time"], '%H:%M:%S') <= datetime.strptime(x.get("Event End Time"), "%H:%M:%S"))):
                         return True
                 return False
         a.close()
