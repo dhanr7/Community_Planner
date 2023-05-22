@@ -3,17 +3,20 @@ body {
 }
 
 .delete_override_divs {
+    /* DO NOT TOUCH THE FOLLOWING */
     display: flex;
     text-align: center;
 }
 
 .event_handler {
+    /* DO NOT TOUCH THE FOLLOWING */
     flex: 1;
     text-align: center;
     align-items: center;
 }
 
 .events {
+    /* DO NOT TOUCH THE FOLLOWING */
     border: 1px black;
     margin: auto;
     height: 20em;
@@ -22,3 +25,4 @@ body {
     text-align: center;
     align-items: center;
 }
+
