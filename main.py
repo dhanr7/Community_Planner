@@ -24,6 +24,8 @@ eventObject.blockAllHolidayDates()
 array_manual_constraints = {}
 array_ai_constraints = {}
 
+event_checkboxid_todelete = []
+
 @app.route('/', methods=["GET", "POST"])
 def index():
     if request.method == "POST":
@@ -68,6 +70,27 @@ def main():
 def delete_override():
     with open("Community_Planner/event_dates.json", "r+") as f:
         event_dates_data = json.load(f)
+    f.close()
+    if request.method == "POST":
+        global event_checkboxid_todelete
+        if len(event_checkboxid_todelete) > 0:
+            event_checkboxid_todelete.clear()
+        if (request.form['delete_override_button'] == 'delete_events_button'):
+            event_checkboxid_todelete = request.form.getlist('event_input')
+            event_checkboxid_todelete = [int(x) for x in event_checkboxid_todelete]
+            print(event_checkboxid_todelete)
+            with open("Community_Planner/event_dates.json", "r") as b:
+                eD = json.load(b)
+            for i, x in enumerate(eD):
+                if (i in event_checkboxid_todelete):
+                    print(i, x)
+                    del eD[i]
+            with open("Community_Planner/event_dates.json", "w") as b:
+                json.dump(eD, b)
+            b.close()
+            return redirect('main')
+        elif (request.form['delete_override_button'] == 'override_events_button'):
+            pass
     return render_template("delete_override_block.html", data=event_dates_data)
 
 

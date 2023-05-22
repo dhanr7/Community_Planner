@@ -7,31 +7,33 @@
         <title>Delete/Override Events</title>
     </head>
     <body>
-        <div class="delete_override_divs">
-            <div class="event_handler">
-                <h1>Delete Events</h1>
-                <div class="events">
-                    {% for x in data %}
-                    <input type="checkbox" name="event_input" value="event_input{{x}}"> {{ x.get("Event Name") }} </input>
-                            {% for e in x.items() %}
-                                <h3> {{ e }} </h3>
-                            {% endfor %}
-                    {% endfor %}
+        <form method="post">
+            <div class="delete_override_divs">
+                <div class="event_handler">
+                    <h1>Delete Events</h1>
+                    <div class="events">
+                        {% for x in data %}
+                        <input type="checkbox" name="event_input" value="{{ loop.index0 }}"> {{ x.get("Event Name") }} </input>
+                                {% for e in x.items() %}
+                                    <h3> {{ e }} </h3>
+                                {% endfor %}
+                        {% endfor %}
+                    </div>
+                    <button type="submit" name="delete_override_button" value="delete_events_button">Delete Event(s)</button>
                 </div>
-                <button type="submit" name="delete_override_button" value="delete_events_button">Delete Event(s)</button>
-            </div>
-            <div class="event_handler">
-                <h1> Override Events </h1>
-                <div class="events">
-                    {% for x in data %}
-                    <input type="checkbox" name="event_input" value="event_input"> {{ x.get("Event Name") }} </input>
-                            {% for e in x.items() %}
-                                <h3> {{ e }} </h3>
-                            {% endfor %}
-                    {% endfor %}
+                <div class="event_handler">
+                    <h1> Override Events </h1>
+                    <div class="events">
+                        {% for x in data %}
+                        <input type="checkbox" name="event_input" value=" {{ loop.index0 }} "> {{ x.get("Event Name") }} </input>
+                                {% for e in x.items() %}
+                                    <h3> {{ e }} </h3>
+                                {% endfor %}
+                        {% endfor %}
+                    </div>
+                    <button type="submit" name="delete_override_button" value="override_events_button">Override Event(s)</button>
                 </div>
-                <button type="submit" name="delete_override_button" value="override_events_button">Override Event(s)</button>
             </div>
-        </div>
+        </form>
     </body>
 </html>
