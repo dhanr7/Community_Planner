@@ -4,10 +4,19 @@ import time
 import users_class as users_class
 import datetime
 import appointment_scheduleManager_class as appClass
+import os
+import openai
+
+#AI generate event description based on title, and generate title based on description, and (if possible, if time permits) multiple day event, ask AI to find the best times to break it down and what best to include in each
+
+#make fullcalendar work and add events to it
+#admin have the power to override/delete events as well as block time periods for future
 
 app = Flask(__name__)
 
-admin = users_class.User("admin", "admin", "administrator")
+authenticator = users_class.User()
+
+current_username = None
 
 eventObject = appClass.ScheduleManager()
 eventObject.blockAllHolidayDates()
@@ -15,20 +24,33 @@ eventObject.blockAllHolidayDates()
 array_manual_constraints = {}
 array_ai_constraints = {}
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def index():
+    if request.method == "POST":
+        global current_username
+        current_username = None
+        if (request.form["login"] == "login"):
+            return redirect('authenticate')
+        elif (request.form["login"] == "new_user"):
+            return redirect('new_user')
     return render_template("intro_login.html")
+
+@app.route('/new_user', methods=["GET", "POST"])
+def new_user_creation():
+    return render_template("new_user.html")
 
 @app.route('/authenticate', methods=['GET', 'POST'])
 def authenticate():
     if request.method == "POST":
         input_user = request.form.get("username")
         input_pwd = request.form.get("password")
-        if (admin.authenticateCredentials(input_user, input_pwd) == True):
+        if (authenticator.checkIfUserExists(input_user, input_pwd) == True):
+            global current_username
+            current_username = input_user
+            print(authenticator.checkIfAdmin(input_user))
             return redirect('main')
         else:
             return abort(401)
-            
     return render_template("authenticate.html")
 
 @app.route('/main', methods = ['GET', 'POST'])
@@ -36,11 +58,18 @@ def main():
     if request.method == "POST":
         if (request.form['redirect'] == 'manual'):
             return redirect('manual')
-        elif (request.form['redirect'] == 'ai'):
-            return redirect('ai')
+        elif (request.form['redirect'] == 'delete_override'):
+            return redirect('delete_override')
         else:
             pass
-    return render_template("main_page.html")
+    return render_template("main_page.html", authenticator=authenticator, current_username=current_username)
+
+@app.route('/delete_override', methods=['GET', 'POST'])
+def delete_override():
+    with open("Community_Planner/event_dates.json", "r+") as f:
+        event_dates_data = json.load(f)
+    return render_template("delete_override_block.html", data=event_dates_data)
+
 
 @app.route('/manual', methods=['GET', 'POST'])
 def manual():
@@ -58,7 +87,7 @@ def manual():
                                                 "Participant Names": str(request.form.get("participant-names"))})
                 print(array_manual_constraints) #solely for debugging purposes
                 if (eventObject.checkIfEventBlocked(array_manual_constraints) == True):
-                    return redirect('manual_error')
+                    return redirect('manual_error') #make sure to add the description of the event that was already scheduled
 
             elif str(request.form.get("eventTypeLabel"))  == "Custom":
                array_manual_constraints.update({"Event Type": str(request.form.get("customLabelText")), 
@@ -77,6 +106,8 @@ def manual():
             return redirect('manual_confirm')
     return render_template("manual.html")
 
+
+
 @app.route('/manual_error', methods=['GET', 'POST'])
 def manual_error():
     if request.method == "POST":
@@ -85,10 +116,6 @@ def manual_error():
         elif request.form['redirect'] == "main_redirect":
             return redirect(url_for('main'))
     return render_template("manual_error.html")
-
-@app.route('/ai', methods=['GET', 'POST'])
-def ai():
-    return render_template("ai.html")
 
 @app.route('/manual_confirm', methods=['GET', 'POST'])
 def manual_confirmation(): 
@@ -102,16 +129,5 @@ def manual_confirmation():
         else:
             pass
     return render_template('manual_confirmation.html', array_manual_constraints=array_manual_constraints)
-
-@app.route('/ai_confirm', methods=['GET', 'POST'])
-def ai_confirmation():
-    if request.method == "POST":
-        if (request.form['option'] == 'proceed_button'):
-            return redirect(url_for('main'))
-        elif (request.form['option'] == 'change_params'):
-            return redirect(url_for('ai'))
-        else:
-            pass
-    return render_template("ai_confirmation.html")
 
 app.run()

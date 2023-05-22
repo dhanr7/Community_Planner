@@ -1,21 +1,29 @@
-* {
-    text-align: center;
-    flex-direction: column;
+body {
+	font-family: 'Tiro Tamil', serif;
+	background: linear-gradient(purple, gold);
+
+}
+.calendar {
+	background: white;
+	height: 50%;
+	width: 50%;
+	border: 5px solid black;
+
+}
+
+.container {
+	font-family: 'Tiro Tamil', serif;
+	margin: 0;
+	padding: 0;
+	min-height: 100%;
+	text-align: center;
+    /* flex-direction: column;
     display: flex;
     justify-content: center;
     margin: 2 auto;
     align-items: center;
     min-height: 100%;
-	font-family: 'Tiro Tamil', serif;
-}
-body {
-	font-family: 'Tiro Tamil', sans-serif;
-	margin: 0;
-	padding: 0;
-	background: linear-gradient(purple, gold);
-	min-height: 100%;
-}
-.container {
+	font-family: 'Tiro Tamil', serif; */
 	max-width: 1200px;
 	margin: 0 auto;
 	padding: 20px;
