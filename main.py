@@ -12,6 +12,8 @@ import openai
 #make fullcalendar work and add events to it
 #admin have the power to override/delete events
 
+#edit new_user.html and make sur it has fields for: Old Username & PWD, New Username and PWD
+
 app = Flask(__name__)
 
 authenticator = users_class.User()
@@ -90,7 +92,7 @@ def delete_override():
             b.close()
             return redirect('main')
         elif (request.form['delete_override_button'] == 'override_events_button'):
-            pass
+            pass #yet to add override functionality
     return render_template("delete_override_block.html", data=event_dates_data)
 
 
