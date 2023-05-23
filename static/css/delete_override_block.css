@@ -1,28 +1,56 @@
 body {
     font-family: 'Tiro Tamil', serif;
-}
-
-.delete_override_divs {
-    /* DO NOT TOUCH THE FOLLOWING */
+    background-color: #f4f4f4;
+  }
+  
+  .delete_override_divs {
     display: flex;
-    text-align: center;
-}
-
-.event_handler {
-    /* DO NOT TOUCH THE FOLLOWING */
+    justify-content: center;
+  }
+  
+  .event_handler {
     flex: 1;
     text-align: center;
     align-items: center;
-}
-
-.events {
-    /* DO NOT TOUCH THE FOLLOWING */
-    border: 1px black;
+    margin: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .events {
+    border: 1px solid #ddd;
     margin: auto;
     height: 20em;
-    width: 50%;
+    width: 70%;
     overflow: scroll;
     text-align: center;
     align-items: center;
-}
-
+    padding: 10px;
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+    color: #337ab7;
+  }
+  
+  h3 {
+    margin: 10px 0;
+    color: #f0ad4e;
+  }
+  
+  button[type="submit"] {
+    background-color: #337ab7;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    margin-top: 20px;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #f0ad4e;
+  }

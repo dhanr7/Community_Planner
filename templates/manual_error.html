@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/manual_error.css') }}">
-        <title>Manual Error</title>
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/manual_error.css') }}">
+    <title>Manual Error</title>
+</head>
+<body>
+    <div class="container">
         <h1>This event is already scheduled for this block of time.</h1>
         <form method="post" id="redirect_params">
             <button type="submit" name="redirect" value="update_params">Change Parameters</button>
             <button type="submit" name="redirect" value="main_redirect">Cancel Schedule and Redirect to Main Page</button>
         </form>
-    </body>
+    </div>
+</body>
 </html>
