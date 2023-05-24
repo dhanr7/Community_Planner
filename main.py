@@ -12,7 +12,7 @@ import openai
 #make fullcalendar work and add events to it
 #admin have the power to override/delete events
 
-#edit new_user.html and make sur it has fields for: Old Username & PWD, New Username and PWD
+#add functionality for new_user registration
 
 app = Flask(__name__)
 

@@ -6,32 +6,35 @@ import os
 class User:
     def __init__(cls):
         User.addUser("admin", "admin", "administrator")
+        User.addUser("student", "student", "student")
 
     @classmethod
     def addUser(cls, username, pwd, classifier):
-        with open("Community_Planner/users.json", "r+") as f:
-            if os.path.getsize("Community_Planner/users.json") != 0:
+        to_dump = {}
+        if os.path.getsize("Community_Planner/users.json") != 0:
+            with open("Community_Planner/users.json", "r+") as f:
                 data = json.load(f)
-                for x in data:
-                    if (x.get("Username") == username):
-                        return None
-                to_dump = {
-                    {
-                        "Username": username,
-                        "Password": pwd,
-                        "Classifier": classifier,
-                    }
-                }
-                json.dump(to_dump, f)
-                return True
-            elif os.path.getsize("Community_Planner/users.json") == 0:
-                to_dump = {
+                to_dump.clear()
+                to_dump.update({
                     "Username": username,
                     "Password": pwd,
                     "Classifier": classifier,
-                }
-                json.dump(to_dump, f)
-                return True
+                })
+                data.append(to_dump)
+                f.seek(0)
+                json.dump(data, f)
+            f.close() 
+        elif os.path.getsize("Community_Planner/users.json") == 0:
+            with open("Community_Planner/users.json", "w") as a:
+                to_dump.clear()
+                to_dump.update({
+                    "Username": username,
+                    "Password": pwd,
+                    "Classifier": classifier,
+                })
+                a.seek(0)
+                json.dump(to_dump, a)
+            a.close()
 
     
     @classmethod
