@@ -5,8 +5,7 @@ import os
 
 class User:
     def __init__(cls):
-        User.addUser("admin", "admin", "administrator")
-        User.addUser("student", "student", "student")
+        pass
 
     @classmethod
     def addUser(cls, username, pwd, classifier):

@@ -7,16 +7,20 @@ import appointment_scheduleManager_class as appClass
 import os
 import openai
 
+#add notes functionality
+
 #AI generate event description based on title, and generate title based on description, and (if possible, if time permits) multiple day event, ask AI to find the best times to break it down and what best to include in each
 
 #make fullcalendar work and add events to it
 #admin have the power to override/delete events
 
-#add functionality for new_user registration
+#fix users getting added mutliple times to users.json
 
 app = Flask(__name__)
 
 authenticator = users_class.User()
+authenticator.addUser("admin", "admin", "administrator")
+authenticator.addUser("student", "student", "student")
 
 current_username = None
 
@@ -41,6 +45,15 @@ def index():
 
 @app.route('/new_user', methods=["GET", "POST"])
 def new_user_creation():
+    if request.method == "POST":
+        toVerifyAdminUser = str(request.form.get("admin_username"))
+        toVerifyAdminPwd = str(request.form.get("admin_password"))
+        if authenticator.checkIfUserExists(toVerifyAdminUser, toVerifyAdminPwd):
+            print(str(request.form.get("username")), str(request.form.get("password")), str(request.form.get("typeClassifier")))
+            authenticator.addUser(str(request.form.get("username")), str(request.form.get("password")), str(request.form.get("typeClassifier")))
+            return redirect(url_for('index'))
+        else:
+            return abort(401, "Your administrator credentials were not verified or you are not authorized to create a new user at this time. Please try again.")
     return render_template("new_user.html")
 
 @app.route('/authenticate', methods=['GET', 'POST'])
