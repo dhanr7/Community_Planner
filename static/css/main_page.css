@@ -54,3 +54,8 @@ button {
 button:hover {
 	background-color: #555;
 }
+
+.fc-event-time, .fc-event-title {
+	padding: 0 1px;
+	white-space: normal;
+}

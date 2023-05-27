@@ -10,7 +10,7 @@ import openai
 #AI generate event description based on title, and generate title based on description, and (if possible, if time permits) multiple day event, ask AI to find the best times to break it down and what best to include in each
 
 #make fullcalendar events look good without the hashes & extra datetime stuff
-#admin have the power to override/delete events
+#admin have the power to override
 
 
 app = Flask(__name__)
