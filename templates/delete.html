@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/delete.css') }}">
+    <title>Delete Event</title>
+</head>
+<body>
+    <form method="post">
+        <div class="delete_div">
+            <div class="event_handler">
+                <h1>Delete Events</h1>
+                <div class="events">
+                    {% for x in data %}
+                    <input type="checkbox" name="event_input" value="{{ loop.index0 }}"> {{ x.get("Event Name") }} </input>
+                            {% for e in x.items() %}
+                                <h3> {{ e }} </h3>
+                            {% endfor %}
+                    {% endfor %}
+                </div>
+                <button type="submit" name="delete_button" value="delete_events_button">Delete Event(s)</button>
+                <button type="submit" name="delete_button" value="return_back">Return Back to Previous Page</button>
+            </div>
+            
+        </div>
+    </form>
+</body>
+</html>

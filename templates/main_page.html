@@ -11,7 +11,16 @@
 		document.addEventListener('DOMContentLoaded', function() {
 		  var calendarEl = document.getElementById('calendar');
 		  var calendar = new FullCalendar.Calendar(calendarEl, {
-			initialView: 'dayGridMonth'
+			initialView: 'dayGridMonth',
+			events: [
+			{% for x in use_data %}
+			{
+				title: '{{x["Event Name"]}}',
+				start: '{{x["Event Date"]}}',
+				end: '{{x["Event Date"]}}',
+				},
+			{% endfor %}
+			],
 		  });
 		  calendar.render();
 		});
@@ -26,7 +35,8 @@
 		<form method = "post" id = "button">
 			<button type="submit" name = "redirect" value = "manual">Manual Scheduling</button>
 			{% if (authenticator.checkIfAdmin(current_username)) %}
-				<button type="submit" name = "redirect" value = "delete_override">Delete/Override Events (Administrators Only)</button>
+				<button type="submit" name = "redirect" value = "delete">Delete Events (Administrators Only)</button>
+				<button type="submit" name="redirect" vsalue="override">Override Events (Administrators Only)</button>
 			{% endif %}
 		</form>
 	</div>

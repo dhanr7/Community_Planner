@@ -7,14 +7,11 @@ import appointment_scheduleManager_class as appClass
 import os
 import openai
 
-#add notes functionality
-
 #AI generate event description based on title, and generate title based on description, and (if possible, if time permits) multiple day event, ask AI to find the best times to break it down and what best to include in each
 
-#make fullcalendar work and add events to it
+#make fullcalendar events look good without the hashes & extra datetime stuff
 #admin have the power to override/delete events
 
-#fix users getting added mutliple times to users.json
 
 app = Flask(__name__)
 
@@ -72,17 +69,21 @@ def authenticate():
 
 @app.route('/main', methods = ['GET', 'POST'])
 def main():
+    with open("Community_Planner/event_dates.json", "r") as x:
+        data = json.load(x)
     if request.method == "POST":
         if (request.form['redirect'] == 'manual'):
             return redirect('manual')
-        elif (request.form['redirect'] == 'delete_override'):
-            return redirect('delete_override')
+        elif (request.form['redirect'] == 'delete'):
+            return redirect('delete')
+        elif (request.form['redirect'] == 'override'):
+            return redirect('override')
         else:
             pass
-    return render_template("main_page.html", authenticator=authenticator, current_username=current_username)
+    return render_template("main_page.html", authenticator=authenticator, current_username=current_username, use_data = data)
 
-@app.route('/delete_override', methods=['GET', 'POST'])
-def delete_override():
+@app.route('/delete', methods=['GET', 'POST'])
+def delete():
     with open("Community_Planner/event_dates.json", "r+") as f:
         event_dates_data = json.load(f)
     f.close()
@@ -90,7 +91,7 @@ def delete_override():
         global event_checkboxid_todelete
         if len(event_checkboxid_todelete) > 0:
             event_checkboxid_todelete.clear()
-        if (request.form['delete_override_button'] == 'delete_events_button'):
+        if (request.form['delete_button'] == 'delete_events_button'):
             event_checkboxid_todelete = request.form.getlist('event_input')
             event_checkboxid_todelete = [int(x) for x in event_checkboxid_todelete]
             print(event_checkboxid_todelete)
@@ -104,9 +105,16 @@ def delete_override():
                 json.dump(eD, b)
             b.close()
             return redirect('main')
-        elif (request.form['delete_override_button'] == 'override_events_button'):
-            pass #yet to add override functionality
-    return render_template("delete_override_block.html", data=event_dates_data)
+        elif (request.form['delete_button'] == 'return_back'):
+            return redirect('main')
+    return render_template("delete.html", data=event_dates_data)
+
+@app.route('/override', methods=['GET', 'POST'])
+def override():
+    with open("Community_Planner/event_dates.json", "r+") as f:
+        event_dates_data = json.load(f)
+    f.close()
+    return render_template("override.html", data=event_dates_data)
 
 
 @app.route('/manual', methods=['GET', 'POST'])

@@ -3,12 +3,12 @@ body {
     background-color: #f4f4f4;
   }
   
-  .delete_override_divs {
+.override_div {
     display: flex;
     justify-content: center;
   }
   
-  .event_handler {
+.event_handler {
     flex: 1;
     text-align: center;
     align-items: center;
@@ -19,7 +19,7 @@ body {
     padding: 20px;
   }
   
-  .events {
+.events {
     border: 1px solid #ddd;
     margin: auto;
     height: 20em;
