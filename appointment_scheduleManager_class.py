@@ -35,6 +35,7 @@ class ScheduleManager:
                         return True
                 return False
         a.close()
+    
 
     @classmethod #blocks(schedules) a date with the date and type passed in (type meaning a classifier denoting holiday, school event, etc.)
     def blockDate(cls, event):
@@ -46,10 +47,26 @@ class ScheduleManager:
         a.close()
 
     @classmethod  #unblock a date passed in (i.e remove it from the event_dates.json file which stores all the dates that are "scheduled")
+    #NON-FUNCTIONAL METHOD
     def unblockDate(cls, dateToUnblock):
-        with open("event_dates.json", "r+") as a:
+        with open("Community_Planner/event_dates.json", "r+") as a:
             data = json.load(a)
             for i, x in enumerate(data):
                 if datetime.date(datetime.strptime(x.get("Event Date"), '%Y-%m-%d %H:%M:%S')) == datetime.date(datetime.strptime(dateToUnblock, '%Y-%m-%d')):
                     a.pop(data[i])
             json.dump(data, a)
+    
+    
+    @classmethod
+    def overrideEvent(cls, eventArray, overrideIndex):
+        with open("Community_Planner/event_dates.json", "r") as a:
+            data = json.load(a)
+        for i, x in enumerate(data):
+            if (int(i) == int(overrideIndex)):
+                print(data[i])
+                print(eventArray)
+                data[i] = eventArray
+        with open("Community_Planner/event_dates.json", "w") as k:
+            json.dump(data, k)
+    
+            

@@ -25,7 +25,13 @@ eventObject = appClass.ScheduleManager()
 eventObject.blockAllHolidayDates()
 
 array_manual_constraints = {}
-array_ai_constraints = {}
+array_ai_suggestions = {}
+
+chosen_override_option_num = None
+chosen_override_option_list = {}
+new_override_option_list = {}
+
+override_index = None
 
 event_checkboxid_todelete = []
 
@@ -110,12 +116,94 @@ def delete():
     return render_template("delete.html", data=event_dates_data)
 
 @app.route('/override', methods=['GET', 'POST'])
-def override():
+def override(): #main page to select what to override
     with open("Community_Planner/event_dates.json", "r+") as f:
         event_dates_data = json.load(f)
     f.close()
-    return render_template("override.html", data=event_dates_data)
+    if request.method == "POST":
+        global chosen_override_option_num, chosen_override_option_list
+        global override_index
+        chosen_override_option_list.clear()
+        if (request.form['override_button'] == 'override_events_button'):
+            chosen_override_option_num = int(request.form.get('event_input'))
+            print(chosen_override_option_num)
+            with open('Community_Planner/event_dates.json', 'r') as q:
+                eD = json.load(q)
+            for i, x in enumerate(eD):
+                if (int(i) == int(chosen_override_option_num)):
+                    print(i, x)
+                    chosen_override_option_list = eD[i]
+                    override_index = i
+            q.close()
+            chosen_override_option_list['Event Date'] = datetime.datetime.strftime(datetime.datetime.strptime(chosen_override_option_list['Event Date'], '%Y-%m-%d %H:%M:%S'), '%Y-%m-%d')
+            print(chosen_override_option_list)
+            return redirect('override_option')
+        elif (request.form['override_button'] == 'return_back'):
+            return redirect('main')
+    return render_template('override.html', data=event_dates_data)
 
+@app.route('/override_option', methods=['GET', 'POST'])
+def override_option(): #page that gives the items to oveeride/allows for the admin to override and push it back to the JSON events file.
+    new_override_option_list.clear()
+    if request.method == "POST":
+        if (request.form['redirect'] == 'override_button'):
+            if (str(request.form.get("event-start-time")) == str(chosen_override_option_list['Event Start Time'])) and (str(request.form.get("event-end-time")) == str(chosen_override_option_list['Event End Time'])):
+                new_override_option_list.update({
+                    "Event Type": str(request.form.get("eventTypeLabel")),
+                    "Event Name": str(request.form.get('event-name')),
+                    "Event Date": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get('event-date')), '%Y-%m-%d'), "%Y-%m-%d %H:%M:%S"), 
+                    "Event Start Time": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get("event-start-time")), "%H:%M:%S"), "%H:%M:%S"), 
+                    "Event End Time": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get("event-end-time")), "%H:%M:%S"), "%H:%M:%S"), 
+                    "Event Description": str(request.form.get("event-description")), 
+                    "Number of Participants": str(request.form.get("event-participants")), 
+                    "Participant Names": str(request.form.get("participant-names"))
+                })
+            elif (str(request.form.get("event-start-time")) == str(chosen_override_option_list['Event Start Time'])):
+                new_override_option_list.update({
+                    "Event Type": str(request.form.get("eventTypeLabel")),
+                    "Event Name": str(request.form.get('event-name')),
+                    "Event Date": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get('event-date')), '%Y-%m-%d'), "%Y-%m-%d %H:%M:%S"), 
+                    "Event Start Time": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get("event-start-time")), "%H:%M:%S"), "%H:%M:%S"), 
+                    "Event End Time": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get("event-end-time")), "%H:%M"), "%H:%M:%S"), 
+                    "Event Description": str(request.form.get("event-description")), 
+                    "Number of Participants": str(request.form.get("event-participants")), 
+                    "Participant Names": str(request.form.get("participant-names"))
+                })
+            elif (str(request.form.get("event-end-time")) == str(chosen_override_option_list['Event End Time'])):
+                new_override_option_list.update({
+                    "Event Type": str(request.form.get("eventTypeLabel")),
+                    "Event Name": str(request.form.get('event-name')),
+                    "Event Date": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get('event-date')), '%Y-%m-%d'), "%Y-%m-%d %H:%M:%S"), 
+                    "Event Start Time": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get("event-start-time")), "%H:%M"), "%H:%M:%S"), 
+                    "Event End Time": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get("event-end-time")), "%H:%M:%S"), "%H:%M:%S"), 
+                    "Event Description": str(request.form.get("event-description")), 
+                    "Number of Participants": str(request.form.get("event-participants")), 
+                    "Participant Names": str(request.form.get("participant-names"))
+                })
+            else:
+                new_override_option_list.update({
+                    "Event Type": str(request.form.get("eventTypeLabel")),
+                    "Event Name": str(request.form.get('event-name')),
+                    "Event Date": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get('event-date')), '%Y-%m-%d'), "%Y-%m-%d %H:%M:%S"), 
+                    "Event Start Time": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get("event-start-time")), "%H:%M"), "%H:%M:%S"), 
+                    "Event End Time": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get("event-end-time")), "%H:%M"), "%H:%M:%S"), 
+                    "Event Description": str(request.form.get("event-description")), 
+                    "Number of Participants": str(request.form.get("event-participants")), 
+                    "Participant Names": str(request.form.get("participant-names"))
+                })
+            print(new_override_option_list)
+            eventObject.overrideEvent(new_override_option_list, override_index)
+            return redirect(url_for('main'))
+    return render_template("override_option.html", chosen_override_list=chosen_override_option_list)
+
+@app.route('/override_error', methods=['GET', 'POST'])
+def override_error():
+    if request.method == "POST":
+        if request.form['redirect'] == 'update_params':
+            return redirect('override_option')
+        elif request.form['redirect'] == 'main_redirect':
+            return redirect('main')
+    return render_template('override_error.html')
 
 @app.route('/manual', methods=['GET', 'POST'])
 def manual():

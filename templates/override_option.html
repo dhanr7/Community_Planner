@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/override.css') }}">
+        <title>Override Options</title>
+    </head>
+    <body>
+        <form method="post">
+            <div class="main_override_container">
+                {% if chosen_override_list['Event Type'] == 'Holiday' %}
+                    <div class = "overrideEventFor">
+                        <label for="eventTypeLabel">Schedule Event As: </label>
+                        <input type="checkbox" id = "eventTypeLabel" name="eventTypeLabel" value="Holiday" checked>Holiday
+                        <input type="checkbox" id = "eventTypeLabel" name="eventTypeLabel" value="School Event">School Event
+                        <input type="checkbox" id = "eventTypeLabel" name="eventTypeLabel" value="Custom">Custom
+                        <input type="text" id="customLabelText" name="customLabelText">
+                    </div>
+                {% endif %}
+
+                {% if chosen_override_list['Event Type'] == 'School Event' %}
+                    <div class = "overrideEventFor">
+                        <label for="eventTypeLabel">Schedule Event As: </label>
+                        <input type="checkbox" id = "eventTypeLabel" name="eventTypeLabel" value="Holiday">Holiday
+                        <input type="checkbox" id = "eventTypeLabel" name="eventTypeLabel" value="School Event" checked>School Event
+                        <input type="checkbox" id = "eventTypeLabel" name="eventTypeLabel" value="Custom">Custom
+                        <input type="text" id="customLabelText" name="customLabelText">
+                    </div>
+                {% endif %}
+
+                {% if (chosen_override_list['Event Type'] != 'Holiday') and (chosen_override_list['Event Type'] != 'School Event') %}
+                    <div class = "overrideEventFor">
+                        <label for="eventTypeLabel">Schedule Event As: </label>
+                        <input type="checkbox" id = "eventTypeLabel" name="eventTypeLabel" value="Holiday" >Holiday
+                        <input type="checkbox" id = "eventTypeLabel" name="eventTypeLabel" value="School Event">School Event
+                        <input type="checkbox" id = "eventTypeLabel" name="eventTypeLabel" value="Custom" checked>Custom
+                        <input type="text" id="customLabelText" name="customLabelText" value="{{chosen_override_list['Event Type']}}">
+                    </div>
+                {% endif %}
+
+
+                <label for="event-name">Event Name:</label>
+                <input type="text" id="event-name" name="event-name" value = '{{chosen_override_list["Event Name"]}}' required>
+
+                <label for="event-date">Event Date:</label>
+                <input type="date" id="event-date" name="event-date" value = '{{chosen_override_list["Event Date"]}}' required>
+
+                <label for="event-start-time">Event Start Time:</label>
+                <input type="time" id="event-start-time" name="event-start-time" value = '{{chosen_override_list["Event Start Time"]}}' required>
+
+                <label for="event-end-time">Event End Time:</label>
+                <input type="time" id="event-end-time" name="event-end-time" value = '{{chosen_override_list["Event End Time"]}}' required>
+
+                <label for="event-description">Event Description:</label>
+                <textarea id="event-description" name="event-description" rows="7" required>{{chosen_override_list["Event Description"]}}</textarea>
+
+                <label for="event-participants">Number of Participants:</label>
+                <input type="text" id="event-participants" name="event-participants" value = '{{chosen_override_list["Number of Participants"]}}' required>
+
+                <label for="participant-names">Participant Names:</label>
+                <input type="text" id="participant-names" name="participant-names" value = '{{chosen_override_list["Participant Names"]}}' required>
+                
+                <button type="submit" name="redirect" value="override_button">Override Event With Following Attributes</button>
+            </div>
+        </form>
+    </body>
+</html>

@@ -19,9 +19,12 @@ class User:
                     "Password": pwd,
                     "Classifier": classifier,
                 })
-                data.append(to_dump)
-                f.seek(0)
-                json.dump(data, f)
+                if (to_dump not in data):
+                    data.append(to_dump)
+                    f.seek(0)
+                    json.dump(data, f)
+                else:
+                    pass
             f.close() 
         elif os.path.getsize("Community_Planner/users.json") == 0:
             with open("Community_Planner/users.json", "w") as a:

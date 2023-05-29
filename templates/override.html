@@ -10,10 +10,11 @@
     <form method="post">
         <div class="override_div">
             <div class="event_handler">
-                <h1>Delete Events</h1>
+                <h1>Override Events</h1>
+                <h3>You can choose one event to override at a time. Your changes are final and cannot be reversed after override is complete; instead, you will have to override the event you just overrided.</h3>
                 <div class="events">
                     {% for x in data %}
-                    <input type="checkbox" name="event_input" value="{{ loop.index0 }}"> {{ x.get("Event Name") }} </input>
+                    <input type="radio" name="event_input" value="{{ loop.index0 }}"> {{ x.get("Event Name") }} </input>
                             {% for e in x.items() %}
                                 <h3> {{ e }} </h3>
                             {% endfor %}
