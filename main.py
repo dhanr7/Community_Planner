@@ -195,15 +195,6 @@ def override_option(): #page that gives the items to oveeride/allows for the adm
             return redirect(url_for('main'))
     return render_template("override_option.html", chosen_override_list=chosen_override_option_list)
 
-@app.route('/override_error', methods=['GET', 'POST'])
-def override_error():
-    if request.method == "POST":
-        if request.form['redirect'] == 'update_params':
-            return redirect('override_option')
-        elif request.form['redirect'] == 'main_redirect':
-            return redirect('main')
-    return render_template('override_error.html')
-
 @app.route('/manual', methods=['GET', 'POST'])
 def manual():
     array_manual_constraints.clear()
