@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/intro_login.css') }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tiro+Tamil&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/intro_login.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Tamil&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class = "intro_log">
-        <img class = "logo" src="{{url_for('static', filename='images/avhs_logo.jpg')}}"/>
-        <h1>Welcome to the AVHS Event Planner!</h1>
-        <form method="post">
-            <button class="login" name="login" value="login">Click here to login!</button>
-            <button class="login" name="login" value="new_user">Create new credentials.</button>
-        </form>
+  <div class="intro_log">
+    <img class="logo" src="{{url_for('static', filename='images/avhs_logo.jpg')}}" alt="AVHS Logo">
+    <h1 class="title">Welcome to the AVHS Event Planner!</h1>
+    <div class="button-container">
+      <form method="post">
+        <button class="login-button" name="login" value="login">Click here to login</button>
+      </form>
+      <form method="post">
+        <button class="create-button" name="login" value="new_user">Create new credentials</button>
+      </form>
     </div>
+  </div>
 </body>
 </html>
