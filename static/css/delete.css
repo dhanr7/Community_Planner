@@ -1,8 +1,9 @@
 
 body {
-  font-family: 'Tiro Tamil', serif;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+  background: radial-gradient(circle at 10% 20%, rgb(145, 217, 243) 0%, rgb(147, 164, 243) 90%);
   color: #1d1818;
+  align-items: center;
 }
 
 .delete_div {
