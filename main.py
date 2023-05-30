@@ -214,19 +214,19 @@ def manual():
     array_manual_constraints.clear()
     if request.method == "POST":
         if request.form.get("ai") == "AI-Title":
-            event_title = openai.Completion.create(
+            event_title = (openai.Completion.create(
                 model="text-davinci-003",
                 prompt=f"Generate a title based on the following description: {event_description} within five words.",
                 max_tokens=6,
                 temperature=0.1
-            )["choices"][0]["text"]
+            )["choices"][0]["text"]).strip()
         elif request.form.get("ai") == "AI-Description":
-            event_description = openai.Completion.create(
+            event_description = (openai.Completion.create(
                 model="text-davinci-003",
                 prompt=f"Generate a description based on the following title: {event_title} within five to ten words.",
                 max_tokens=11,
                 temperature=0.1
-            )["choices"][0]["text"]
+            )["choices"][0]["text"]).strip()
         if (request.form['redirect'] == 'schedule_button'):
             if str(request.form.get("eventTypeLabel"))  != "Custom":
                 array_manual_constraints.update({"Event Type": str(request.form.get("eventTypeLabel")), 
