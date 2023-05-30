@@ -24,11 +24,17 @@
                     <input type="checkbox" id="custom" name="eventTypeLabel" value="Custom">
                     <label for="custom">Custom</label>
                 </div>
-                <input type="text" id="customLabelText" name="customLabelText" class="form-input customLabelText" placeholder="Enter Custom Label">
+                <input type="text" id="customLabelText" name="customLabelText" class="form-input customLabelText" placeholder="Enter Custom Event Classifier">
+            </div>
+
+            <div class="ai-options">
+                <label class="form-label" for="ai-title">Generate Title/Description with AI? (Leave Unchecked if AI is not desired) Fill out the necessary fields first. You can view the generated title / description in the confirmation page. </label>
+                <input type="radio" id="ai" name="ai" value="AI-Title">Generate Title Based on Description
+                <input type="radio" id="ai" name="ai" value="AI-Description">Generate Description Based on Title
             </div>
 
             <label class="form-label" for="event-name">Event Name:</label>
-            <input type="text" id="event-name" name="event-name" class="form-input" required>
+            <input type="text" id="event-name" name="event-name" class="form-input" value = '{{title}}'>
 
             <label class="form-label" for="event-date">Event Date:</label>
             <input type="date" id="event-date" name="event-date" class="form-input" required>
@@ -40,7 +46,7 @@
             <input type="time" id="event-end-time" name="event-end-time" class="form-input" required>
 
             <label class="form-label" for="event-description">Event Description:</label>
-            <textarea id="event-description" name="event-description" class="form-input" rows="7" required></textarea>
+            <textarea id="event-description" name="event-description" class="form-input" rows="7">{{description}}</textarea>
 
             <label class="form-label" for="event-participants">Number of Participants:</label>
             <input type="text" id="event-participants" name="event-participants" class="form-input" required>

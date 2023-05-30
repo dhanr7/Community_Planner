@@ -7,10 +7,7 @@ import appointment_scheduleManager_class as appClass
 import os
 import openai
 
-#AI generate event description based on title, and generate title based on description, and (if possible, if time permits) multiple day event, ask AI to find the best times to break it down and what best to include in each
-
-#make fullcalendar events look good without the hashes & extra datetime stuff
-
+#AI generate event description based on title, and generate title based on description
 
 app = Flask(__name__)
 
@@ -33,6 +30,13 @@ new_override_option_list = {}
 override_index = None
 
 event_checkboxid_todelete = []
+
+#AI
+openai.api_key = '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'
+
+generated_title = ""
+generated_description = ""
+
 
 @app.route('/', methods=["GET", "POST"])
 def index():
@@ -75,7 +79,11 @@ def authenticate():
 @app.route('/main', methods = ['GET', 'POST'])
 def main():
     with open("Community_Planner/event_dates.json", "r") as x:
-        data = json.load(x)
+        dataK = json.load(x)
+    x.close()
+    for q in dataK:
+        print(datetime.datetime.strftime(datetime.datetime.strptime(q['Event Date'], '%Y-%m-%d %H:%M:%S'), '%Y-%m-%d'))
+        q["Event Date"] = datetime.datetime.strftime(datetime.datetime.strptime(q['Event Date'], '%Y-%m-%d %H:%M:%S'), '%Y-%m-%d')
     if request.method == "POST":
         if (request.form['redirect'] == 'manual'):
             return redirect('manual')
@@ -85,7 +93,7 @@ def main():
             return redirect('override')
         else:
             pass
-    return render_template("main_page.html", authenticator=authenticator, current_username=current_username, use_data = data)
+    return render_template("main_page.html", authenticator=authenticator, current_username=current_username, use_data = dataK)
 
 @app.route('/delete', methods=['GET', 'POST'])
 def delete():
@@ -197,16 +205,32 @@ def override_option(): #page that gives the items to oveeride/allows for the adm
 
 @app.route('/manual', methods=['GET', 'POST'])
 def manual():
+    event_title = str(request.form.get("event-name"))
+    event_description = str(request.form.get("event-description"))
     array_manual_constraints.clear()
     if request.method == "POST":
+        if request.form.get("ai") == "AI-Title":
+            event_title = openai.Completion.create(
+                model="text-davinci-003",
+                prompt=f"Generate a title based on the following description: {event_description} within five words.",
+                max_tokens=6,
+                temperature=0.1
+            )["choices"][0]["text"]
+        elif request.form.get("ai") == "AI-Description":
+            event_description = openai.Completion.create(
+                model="text-davinci-003",
+                prompt=f"Generate a description based on the following title: {event_title} within five to ten words.",
+                max_tokens=11,
+                temperature=0.1
+            )["choices"][0]["text"]
         if (request.form['redirect'] == 'schedule_button'):
             if str(request.form.get("eventTypeLabel"))  != "Custom":
                 array_manual_constraints.update({"Event Type": str(request.form.get("eventTypeLabel")), 
-                                                "Event Name": str(request.form.get('event-name')), 
+                                                "Event Name": event_title, #str(request.form.get('event-name')), 
                                                 "Event Date": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get('event-date')), '%Y-%m-%d'), "%Y-%m-%d %H:%M:%S"), 
                                                 "Event Start Time": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get("event-start-time")), "%H:%M"), "%H:%M:%S"), 
                                                 "Event End Time": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get("event-end-time")), "%H:%M"), "%H:%M:%S"), 
-                                                "Event Description": str(request.form.get("event-description")), 
+                                                "Event Description": event_description, #str(request.form.get("event-description")), 
                                                 "Number of Participants": str(request.form.get("event-participants")), 
                                                 "Participant Names": str(request.form.get("participant-names"))})
                 print(array_manual_constraints) #solely for debugging purposes
@@ -215,11 +239,11 @@ def manual():
 
             elif str(request.form.get("eventTypeLabel"))  == "Custom":
                array_manual_constraints.update({"Event Type": str(request.form.get("customLabelText")), 
-                                                "Event Name": str(request.form.get('event-name')), 
+                                                "Event Name": event_title, #str(request.form.get('event-name')), 
                                                 "Event Date": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get('event-date')), '%Y-%m-%d'), "%Y-%m-%d %H:%M:%S"), 
                                                 "Event Start Time": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get("event-start-time")), "%H:%M"), "%H:%M:%S"), 
                                                 "Event End Time": datetime.datetime.strftime(datetime.datetime.strptime(str(request.form.get("event-end-time")), "%H:%M"), "%H:%M:%S"), 
-                                                "Event Description": str(request.form.get("event-description")), 
+                                                "Event Description": event_description, #str(request.form.get("event-description")), 
                                                 "Number of Participants": str(request.form.get("event-participants")), 
                                                 "Participant Names": str(request.form.get("participant-names"))})
                print(array_manual_constraints) #solely for debugging purposes
@@ -228,7 +252,7 @@ def manual():
             else:
                 pass
             return redirect('manual_confirm')
-    return render_template("manual.html")
+    return render_template("manual.html", title=generated_title, description=generated_description)
 
 
 
@@ -248,7 +272,7 @@ def manual_confirmation():
             eventObject.blockDate(array_manual_constraints)
             return redirect(url_for('main'))
         elif (request.form['option'] == 'change_params'):
-            eventObject.unblockDate(array_manual_constraints["Event Date"]) #update to reflect datetime object for "Event Date"
+            # eventObject.unblockDate(array_manual_constraints["Event Date"]) #update to reflect datetime object for "Event Date"
             return redirect(url_for('manual'))
         else:
             pass

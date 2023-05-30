@@ -1,45 +1,65 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/main_page.css') }}">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"  integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js"></script>
-	<script>
-		document.addEventListener('DOMContentLoaded', function() {
-		  var calendarEl = document.getElementById('calendar');
-		  var calendar = new FullCalendar.Calendar(calendarEl, {
-			initialView: 'dayGridMonth',
-			events: [
-			{% for x in use_data %}
-			{
-				title: '{{x["Event Name"]}}',
-				start: '{{x["Event Date"]}}',
-				end: '{{x["Event Date"]}}',
-				description:'{{x}}'
-				},
-			{% endfor %}
-			],
-		  });
-		  calendar.render();
-		});
-	</script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main_page.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"  integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js'></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          var calendarEl = document.getElementById('calendar');
+          var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            selectable: true,
+            selectHelper: true,
+            events: [
+            {% for x in use_data %}
+                {
+                    title: '{{x["Event Name"]}}',
+                    start: '{{x["Event Date"]}} {{x["Event Start Time"]}}',
+                    end: '{{x["Event Date"]}} {{x["Event End Time"]}}',
+                    extendedProps: {
+                        type: '{{x["Event Type"]}}',
+                        description:'{{x["Event Description"]}}',
+                        numParticipants: parseInt('{{x["Number of Participants"]}}'),
+                        participantNames: '{{x["Participant Names"]}}',
+                    }
+                    },
+            {% endfor %}
+            ],
+            eventClick: function(info) { //On click, show these attributes of each event.
+                alert(
+                    'Event Type: ' + info.event.extendedProps.type + "\n" +
+                    'Event Title: ' + info.event.title + "\n" +
+                    "Start Date and Time: " + info.event.start + "\n" +
+                    "End Date and Time: " + info.event.end + "\n" +
+                    "Event Description: " + info.event.extendedProps.description + "\n" +
+                    "Number of Participants: " + (info.event.extendedProps.numParticipants).toString() + "\n" +
+                    "Participant Names: " + info.event.extendedProps.participantNames
+                );
+            }
+          });
+          calendar.render();
+        });
+    </script>
 </head>
 <body>
-	<div id="calendar"></div>
-	<div class="container">
-		<h1>Amador Valley Community Planner</h1>
-		<p>Welcome to the Amador Valley Highschool Community Planner, where you can schedule events manually or use AI to suggest such factors as description and title based on some limited information you provide.</p>
-		<p>To get started, please select your preferred scheduling method:</p>
-		<form method = "post" id = "button">
-			<button type="submit" name = "redirect" value = "manual">Manual Scheduling</button>
-			{% if (authenticator.checkIfAdmin(current_username)) %}
-				<button type="submit" name = "redirect" value = "delete">Delete Events (Administrators Only)</button>
-				<button type="submit" name="redirect" value="override">Override Events (Administrators Only)</button>
-			{% endif %}
-		</form>
-	</div>
+    <div id="calendar"></div>
+    <div class="container">
+        <h1>Amador Valley Community Planner</h1>
+        <p>Welcome to the Amador Valley Highschool Community Planner, where you can schedule events manually or use AI to suggest such factors as description and title based on some limited information you provide.</p>
+        <p>To get started, please select your preferred scheduling method:</p>
+        <form method = "post" id = "button">
+            <button type="submit" name = "redirect" value = "manual">Manual Scheduling</button>
+            {% if (authenticator.checkIfAdmin(current_username)) %}
+                <button type="submit" name = "redirect" value = "delete">Delete Events (Administrators Only)</button>
+                <button type="submit" name="redirect" value="override">Override Events (Administrators Only)</button>
+            {% endif %}
+        </form>
+    </div>
 </body>
 </html>
+
