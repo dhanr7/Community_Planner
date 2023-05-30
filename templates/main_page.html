@@ -13,6 +13,7 @@
           var calendarEl = document.getElementById('calendar');
           var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
+            eventTextColor: '#ff0000',
             selectable: true,
             selectHelper: true,
             events: [
@@ -47,18 +48,20 @@
     </script>
 </head>
 <body>
-    <div id="calendar"></div>
-    <div class="container">
-        <h1>Amador Valley Community Planner</h1>
-        <p>Welcome to the Amador Valley Highschool Community Planner, where you can schedule events manually or use AI to suggest such factors as description and title based on some limited information you provide.</p>
-        <p>To get started, please select your preferred scheduling method:</p>
-        <form method = "post" id = "button">
-            <button type="submit" name = "redirect" value = "manual">Manual Scheduling</button>
-            {% if (authenticator.checkIfAdmin(current_username)) %}
-                <button type="submit" name = "redirect" value = "delete">Delete Events (Administrators Only)</button>
-                <button type="submit" name="redirect" value="override">Override Events (Administrators Only)</button>
-            {% endif %}
-        </form>
+    <div class="main_body">
+        <div class = "calendar" id="calendar"></div>
+        <div class="container">
+            <h1>Amador Valley Community Planner</h1>
+            <p>Welcome to the Amador Valley Highschool Community Planner, where you can schedule events manually or use AI to suggest such factors as description and title based on some limited information you provide.</p>
+            <p>To get started, please select your preferred scheduling method:</p>
+            <form method = "post" id = "button">
+                <button type="submit" name = "redirect" value = "manual">Manual Scheduling</button>
+                {% if (authenticator.checkIfAdmin(current_username)) %}
+                    <button type="submit" name = "redirect" value = "delete">Delete Events (Administrators Only)</button>
+                    <button type="submit" name="redirect" value="override">Override Events (Administrators Only)</button>
+                {% endif %}
+            </form>
+        </div>
     </div>
 </body>
 </html>

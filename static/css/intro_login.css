@@ -2,6 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'Tiro Tamil', serif;
   }
   
   body {
@@ -18,8 +19,8 @@
   }
   
   .logo {
-    width: 150px;
-    border: 3px solid #001;
+    width: 200px;
+    border: 5px solid #001;
     border-radius: 50%;
     object-fit: cover;
   }
@@ -27,20 +28,25 @@
   .title {
     margin-top: 20px;
     font-size: 24px;
-    color: #fff;
+    color: black;
   }
   
+  .spacer {
+    width: 25px;
+    height: auto;
+    display: inline-block;
+  }
+
   .button-container {
     display: flex;
-    flex-direction: column;
-    margin-top: 40px;
+    flex-direction: row;
+    padding: 10px 10px 10px 10px;
   }
   
-  .login-button {
-    margin-bottom: 20px;
-    padding: 12px 24px;
+  .login-button, .create-button {
+    padding: 10px 10px 10px 10px;
     font-size: 18px;
-    background-color: #337ab7;
+    background-color: darkslategrey;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -48,22 +54,6 @@
     transition: background-color 0.3s ease-in-out;
   }
   
-  .login-button:hover {
-    background-color: #135d9e;
+  .login-button:hover, .create-button:hover {
+    background-color: lightgrey
   }
-  
-  .create-button {
-    padding: 12px 24px;
-    font-size: 18px;
-    background-color: #5cb85c;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-  }
-  
-  .create-button:hover {
-    background-color: #449d44;
-  }
-  

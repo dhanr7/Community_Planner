@@ -1,7 +1,9 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* font-family: 'Tiro Tamil', serif; */
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: #fff;
+    text-align: center;
 }
 
 .container {
@@ -18,7 +20,7 @@ body {
 }
 
 h1 {
-    font-size: 28px;
+    font-size: 2em;
     margin-bottom: 30px;
     color: #333;
 }
@@ -45,7 +47,8 @@ form {
 
 .checkboxGroup {
     display: flex;
-    align-items: center;
+    justify-content: center;
+    align-items: column;
     color: #292727;
 }
 

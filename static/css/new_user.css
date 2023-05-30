@@ -1,26 +1,26 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #ffffff;
+    font-family: 'Tiro Tamil', serif;
+    background: linear-gradient(purple, gold);
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
 }
 
 .container {
-    max-width: 400px;
+    max-width: 600px;
     margin: 0 auto;
     padding: 30px;
     box-sizing: border-box;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
     margin-top: 50px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    min-height: 100vh;
 }
 
 h1 {
     text-align: center;
     margin-bottom: 30px;
-    color: #333;
+    color: black;
+    font-size: 3em;
+    font-weight: bold;
 }
 
 form {
@@ -42,6 +42,7 @@ input[type="text"], input[type="password"] {
 }
 
 button[type="submit"] {
+    font-family: 'Tiro Tamil', serif;
     background-color: #333;
     color: #fff;
     padding: 10px 20px;
@@ -49,6 +50,7 @@ button[type="submit"] {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
+    font-size: 1.05em;
 }
 
 button[type="submit"]:hover {

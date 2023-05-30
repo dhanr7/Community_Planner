@@ -7,8 +7,6 @@ import appointment_scheduleManager_class as appClass
 import os
 import openai
 
-#AI generate event description based on title, and generate title based on description
-
 app = Flask(__name__)
 
 authenticator = users_class.User()
