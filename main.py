@@ -31,7 +31,7 @@ override_index = None
 event_checkboxid_todelete = []
 
 #AI
-openai.api_key = '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'
+openai.api_key = ''
 
 generated_title = ""  
 generated_description = ""
