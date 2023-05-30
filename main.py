@@ -8,11 +8,6 @@ import os
 import openai
 
 
-#find out why some events when clicke don is causing null and NaN
-
-#record presentation
-
-
 app = Flask(__name__)
 
 authenticator = users_class.User()
