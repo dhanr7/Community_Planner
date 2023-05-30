@@ -7,6 +7,12 @@ import appointment_scheduleManager_class as appClass
 import os
 import openai
 
+
+#find out why some events when clicke don is causing null and NaN
+
+#record presentation
+
+
 app = Flask(__name__)
 
 authenticator = users_class.User()
@@ -30,9 +36,9 @@ override_index = None
 event_checkboxid_todelete = []
 
 #AI
-openai.api_key = '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'
+openai.api_key = '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'
 
-generated_title = ""
+generated_title = ""  
 generated_description = ""
 
 
